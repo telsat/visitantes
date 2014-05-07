@@ -28,14 +28,25 @@ public class Registro {
 	private Date fechaingreso;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date fechasalida;
-	
-	private String foto;
-	private String huella;
-	
+	private Date fechasalida;	
+	private String asunto;
+	private String visitadaausente;
 	
 	
 	
+	
+	public String getAsunto() {
+		return asunto;
+	}
+	public void setAsunto(String asunto) {
+		this.asunto = asunto;
+	}
+	public String getVisitadaausente() {
+		return visitadaausente;
+	}
+	public void setVisitadaausente(String visitadaausente) {
+		this.visitadaausente = visitadaausente;
+	}
 	public String getPersonavisitada() {
 		return personavisitada;
 	}
@@ -72,19 +83,6 @@ public class Registro {
 	public void setFechasalida(Date fechasalida) {
 		this.fechasalida = fechasalida;
 	}
-	public String getFoto() {
-		return foto;
-	}
-	public void setFoto(String foto) {
-		this.foto = foto;
-	}
-	public String getHuella() {
-		return huella;
-	}
-	public void setHuella(String huella) {
-		this.huella = huella;
-	}
-	
 	
 	
 

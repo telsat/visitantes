@@ -6,17 +6,33 @@ public class PersonaTO {
 	private int cedula;
 	private String nombre;
 	private String apellido;
-	private Date fechaingreso;
+	private Date fechanacimiento;
 	private String sexo;
 	private String tipoSangre;
+	private String foto;
+	private String huella;
 	
 	
 	
-	public Date getFechaingreso() {
-		return fechaingreso;
+	
+	public String getFoto() {
+		return foto;
 	}
-	public void setFechaingreso(Date fechaingreso) {
-		this.fechaingreso = fechaingreso;
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+	public String getHuella() {
+		return huella;
+	}
+	public void setHuella(String huella) {
+		this.huella = huella;
+	}
+
+	public Date getFechanacimiento() {
+		return fechanacimiento;
+	}
+	public void setFechanacimiento(Date fechanacimiento) {
+		this.fechanacimiento = fechanacimiento;
 	}
 	public String getTipoSangre() {
 		return tipoSangre;

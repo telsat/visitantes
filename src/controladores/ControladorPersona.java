@@ -22,22 +22,37 @@ public class ControladorPersona {
 			String nombre = personaTO.getNombre();
 			String apellido = personaTO.getApellido();
 			String sexo = personaTO.getSexo();
-			Date fecha = personaTO.getFechaingreso();
+			Date fecha = personaTO.getFechanacimiento();
 			String tipoSangre = personaTO.getTipoSangre();
-				
+			String foto = personaTO.getFoto();
+			String huella = personaTO.getHuella();
 			
 			try {
+				Persona pers = em.find(Persona.class, cedula);
+				if(pers!=null){
+					String fotovieja = pers.getFoto();
+					System.out.println("hola "+fotovieja);
+				}else{
+					em.getTransaction().begin();
+					
+					persona.setCedula(cedula);			
+					persona.setNombre(nombre);
+					persona.setApellido(apellido);	
+					persona.setFechanacimiento(fecha);
+					persona.setSexo(sexo);
+					persona.setTipoSangre(tipoSangre);
+					persona.setFoto(foto);
+					persona.setHuella(huella);
+					em.persist(persona);
+					em.getTransaction().commit();					
+					
+				}
 				
 				
-				em.getTransaction().begin();
-				persona.setCedula(cedula);			
-				persona.setNombre(nombre);
-				persona.setApellido(apellido);	
-				persona.setFechanacimiento(fecha);
-				persona.setSexo(sexo);
-				persona.setTipoSangre(tipoSangre);
-				em.persist(persona);
-				em.getTransaction().commit();	
+					
+					
+				
+				
 				
 				
 			} catch (Exception e) {

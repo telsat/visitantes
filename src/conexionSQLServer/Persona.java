@@ -27,9 +27,25 @@ public class Persona {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="fechanacimiento")
 	private Date fechanacimiento;
+	private String foto;
+	private String huella;
+	
+	
 	
 
 	
+	public String getFoto() {
+		return foto;
+	}
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+	public String getHuella() {
+		return huella;
+	}
+	public void setHuella(String huella) {
+		this.huella = huella;
+	}
 	public String getTipoSangre() {
 		return tipoSangre;
 	}

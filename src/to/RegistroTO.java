@@ -8,13 +8,24 @@ public class RegistroTO {
 	private int cedulapersona;
 	private Date fechaingreso;
 	private Date fechasalida;	
-	private String foto;
-	private String huella;
 	private String equipos;
 	private String personavisitada;
+	private String asunto;
+	private String visitadaausente;
 	
 	
-	
+	public String getAsunto() {
+		return asunto;
+	}
+	public void setAsunto(String asunto) {
+		this.asunto = asunto;
+	}
+	public String getVisitadaausente() {
+		return visitadaausente;
+	}
+	public void setVisitadaausente(String visitadaausente) {
+		this.visitadaausente = visitadaausente;
+	}
 	public String getEquipos() {
 		return equipos;
 	}
@@ -51,18 +62,7 @@ public class RegistroTO {
 	public void setFechasalida(Date fechasalida) {
 		this.fechasalida = fechasalida;
 	}
-	public String getFoto() {
-		return foto;
-	}
-	public void setFoto(String foto) {
-		this.foto = foto;
-	}
-	public String getHuella() {
-		return huella;
-	}
-	public void setHuella(String huella) {
-		this.huella = huella;
-	}
+
 	
 	
 }

@@ -15,8 +15,6 @@ public class controladorRegistro {
 	
 	public void guardarRegistro(RegistroTO registroTO){
 		int cedula = registroTO.getCedulapersona();
-		String foto = registroTO.getFoto();
-		String huella = registroTO.getHuella();
 		Date fechaingreso = registroTO.getFechaingreso();
 		Date fechasalida = registroTO.getFechasalida();
 		String personavisitada = registroTO.getPersonavisitada();
@@ -28,8 +26,6 @@ public class controladorRegistro {
 			registro.setCedulapersona(cedula);
 			registro.setFechaingreso(fechaingreso);
 			registro.setFechasalida(fechasalida);
-			registro.setFoto(foto);
-			registro.setHuella(huella);
 			registro.setEquipos(equipos);
 			registro.setPersonavisitada(personavisitada);
 			registro.setId(id);
@@ -67,6 +63,7 @@ public class controladorRegistro {
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
+			
 		}
 		
 	}

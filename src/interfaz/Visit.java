@@ -17,10 +17,16 @@ import to.RegistroTO;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.swing.JCheckBox;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+import javax.swing.JList;
+import javax.swing.JComboBox;
+
 
 
 
@@ -60,7 +66,7 @@ public class Visit extends JFrame {
 	 */
 	public Visit() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 506, 294);
+		setBounds(100, 100, 641, 294);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -96,14 +102,18 @@ public class Visit extends JFrame {
 				String sexo = sexoTxt.getText();
 				String tiposangre = sangreTxt.getText();
 				String ced = cedulaTxt.getText();
+				
 				int cedula = Integer.parseInt(ced);
+				
+				Date fecha = new Date();
+				
 				
 				SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
 				String nacimiento = nacimientoTxt.getText();
 			 
 				try {
 			 
-					Date fecha = formatter.parse(nacimiento);
+					fecha = formatter.parse(nacimiento);
 					
 			 
 				} catch (ParseException e) {
@@ -117,7 +127,7 @@ public class Visit extends JFrame {
 				personaTO.setNombre(nombre);
 				personaTO.setApellido(apellido);
 				personaTO.setCedula(cedula);
-				personaTO.setFechaingreso(date);
+				personaTO.setFechanacimiento(fecha);
 				personaTO.setSexo(sexo);
 				personaTO.setTipoSangre(tiposangre);
 				ControladorPersona controlP = new ControladorPersona();
@@ -219,5 +229,11 @@ public class Visit extends JFrame {
 		fabricacion2txt.setBounds(394, 69, 86, 20);
 		contentPane.add(fabricacion2txt);
 		fabricacion2txt.setColumns(10);
+		
+		JCheckBox chckbxNewCheckBox = new JCheckBox("persona no disponible");
+		chckbxNewCheckBox.setBounds(433, 213, 154, 23);
+		contentPane.add(chckbxNewCheckBox);
+		
+		
 	}
 }
