@@ -20,6 +20,8 @@ public class controladorRegistro {
 		String personavisitada = registroTO.getPersonavisitada();
 		String equipos = registroTO.getEquipos();
 		int id = registroTO.getId();
+		String asunto = registroTO.getAsunto();
+		String ausente = registroTO.getVisitadaausente();
 		
 		try {
 			em.getTransaction().begin();
@@ -29,6 +31,8 @@ public class controladorRegistro {
 			registro.setEquipos(equipos);
 			registro.setPersonavisitada(personavisitada);
 			registro.setId(id);
+			registro.setAsunto(asunto);
+			registro.setVisitadaausente(ausente);
 			em.persist(registro);
 			em.getTransaction().commit();
 			
