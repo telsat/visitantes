@@ -7,8 +7,7 @@ public class RegistroTO {
 	private int Id;
 	private int cedulapersona;
 	private Date fechaingreso;
-	private Date fechasalida;	
-	private String equipos;
+	private Date fechasalida;		
 	private String personavisitada;
 	private String asunto;
 	private String visitadaausente;
@@ -26,12 +25,7 @@ public class RegistroTO {
 	public void setVisitadaausente(String visitadaausente) {
 		this.visitadaausente = visitadaausente;
 	}
-	public String getEquipos() {
-		return equipos;
-	}
-	public void setEquipos(String equipos) {
-		this.equipos = equipos;
-	}
+
 	public String getPersonavisitada() {
 		return personavisitada;
 	}

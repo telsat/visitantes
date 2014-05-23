@@ -17,8 +17,7 @@ public class controladorRegistro {
 		int cedula = registroTO.getCedulapersona();
 		Date fechaingreso = registroTO.getFechaingreso();
 		Date fechasalida = registroTO.getFechasalida();
-		String personavisitada = registroTO.getPersonavisitada();
-		String equipos = registroTO.getEquipos();
+		String personavisitada = registroTO.getPersonavisitada();		
 		int id = registroTO.getId();
 		String asunto = registroTO.getAsunto();
 		String ausente = registroTO.getVisitadaausente();
@@ -28,7 +27,6 @@ public class controladorRegistro {
 			registro.setCedulapersona(cedula);
 			registro.setFechaingreso(fechaingreso);
 			registro.setFechasalida(fechasalida);
-			registro.setEquipos(equipos);
 			registro.setPersonavisitada(personavisitada);
 			registro.setId(id);
 			registro.setAsunto(asunto);

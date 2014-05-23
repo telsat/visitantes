@@ -3,6 +3,8 @@
 	<persistence-unit name="conexionSQLServer">
 		<class>conexionSQLServer.Persona</class>
 		<class>entity.Registro</class>
+		<class>entity.Equipo</class>
+		<class>entity.Empleado</class>
 
 
 <properties>

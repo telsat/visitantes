@@ -31,7 +31,8 @@ public class ControladorPersona {
 				Persona pers = em.find(Persona.class, cedula);
 				if(pers!=null){
 					String fotovieja = pers.getFoto();
-					System.out.println("hola "+fotovieja);
+					DisplayImg img = new DisplayImg();
+					img.Display(fotovieja);
 				}else{
 					em.getTransaction().begin();
 					

@@ -18,8 +18,6 @@ public class EntityManagerUtil {
 	
 	public static EntityManager getEntityManager(){
 		return emf.createEntityManager();
-	}
-	
-	
+	}	
 
 }

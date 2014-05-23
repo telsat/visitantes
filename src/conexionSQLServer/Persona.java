@@ -85,8 +85,6 @@ public class Persona {
 	}
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
-	}
-	
-	
+	}	
 
 }

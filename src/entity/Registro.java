@@ -23,7 +23,7 @@ public class Registro {
 	private int Id;
 	private int cedulapersona;
 	private String personavisitada;
-	private String equipos;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaingreso;
 	
@@ -53,12 +53,7 @@ public class Registro {
 	public void setPersonavisitada(String personavisitada) {
 		this.personavisitada = personavisitada;
 	}
-	public String getEquipos() {
-		return equipos;
-	}
-	public void setEquipos(String equipos) {
-		this.equipos = equipos;
-	}
+
 	public int getId() {
 		return Id;
 	}
