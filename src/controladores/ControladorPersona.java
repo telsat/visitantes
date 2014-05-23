@@ -1,5 +1,9 @@
 package controladores;
 
+import huella.GuardarHuella;
+
+import java.awt.Image;
+import java.io.IOException;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -7,16 +11,20 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import com.github.sarxos.webcam.Webcam;
+
 import conexionSQLServer.EntityManagerUtil;
 import conexionSQLServer.Persona;
 import to.PersonaTO;
+import webcam.Fotos;
 
 public class ControladorPersona {
 	private EntityManager em = EntityManagerUtil.getEntityManager();
 
 	Persona persona = new Persona();
-		
-		public void guardarPersona(PersonaTO personaTO){
+	Fotos fotos = new Fotos();
+	GuardarHuella h = new GuardarHuella();
+		public void guardarPersona(PersonaTO personaTO, Webcam webcam,Image huellaImg){
 			
 			int cedula = personaTO.getCedula();
 			String nombre = personaTO.getNombre();
@@ -24,8 +32,9 @@ public class ControladorPersona {
 			String sexo = personaTO.getSexo();
 			Date fecha = personaTO.getFechanacimiento();
 			String tipoSangre = personaTO.getTipoSangre();
-			String foto = personaTO.getFoto();
-			String huella = personaTO.getHuella();
+			
+			
+			
 			
 			try {
 				Persona pers = em.find(Persona.class, cedula);
@@ -34,6 +43,14 @@ public class ControladorPersona {
 					DisplayImg img = new DisplayImg();
 					img.Display(fotovieja);
 				}else{
+					
+					String foto = fotos.tomarfoto(webcam);
+					String huella = "";
+					try {
+						huella = h.guardarguella(huellaImg, cedula);
+					} catch (IOException e1) {				
+						e1.printStackTrace();
+					}
 					em.getTransaction().begin();
 					
 					persona.setCedula(cedula);			

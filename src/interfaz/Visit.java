@@ -1,16 +1,23 @@
 package interfaz;
 
 
+import huella.GuardarHuella;
+
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Image;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 import controladores.ControladorEmpleado;
 import controladores.ControladorEquipo;
@@ -35,6 +42,20 @@ import java.awt.Color;
 
 import javax.swing.JTable;
 
+import com.digitalpersona.onetouch.DPFPDataPurpose;
+import com.digitalpersona.onetouch.DPFPFeatureSet;
+import com.digitalpersona.onetouch.DPFPGlobal;
+import com.digitalpersona.onetouch.DPFPSample;
+import com.digitalpersona.onetouch.DPFPTemplate;
+import com.digitalpersona.onetouch.capture.DPFPCapture;
+import com.digitalpersona.onetouch.capture.event.DPFPDataAdapter;
+import com.digitalpersona.onetouch.capture.event.DPFPDataEvent;
+import com.digitalpersona.onetouch.capture.event.DPFPSensorAdapter;
+import com.digitalpersona.onetouch.capture.event.DPFPSensorEvent;
+import com.digitalpersona.onetouch.processing.DPFPEnrollment;
+import com.digitalpersona.onetouch.processing.DPFPFeatureExtraction;
+import com.digitalpersona.onetouch.processing.DPFPImageQualityException;
+import com.digitalpersona.onetouch.verification.DPFPVerification;
 import com.github.sarxos.webcam.Webcam;
 
 
@@ -42,6 +63,9 @@ import com.github.sarxos.webcam.WebcamPanel;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+
+import javax.swing.JTextArea;
 
 
 
@@ -78,13 +102,68 @@ public class Visit extends JFrame {
 			}
 		});
 	}
+	
+	
+	private DPFPCapture Lector = DPFPGlobal.getCaptureFactory().createCapture();
+	private DPFPEnrollment Reclutador = DPFPGlobal.getEnrollmentFactory().createEnrollment();
+	DPFPVerification Verificador = DPFPGlobal.getVerificationFactory().createVerification();
+	private DPFPTemplate template;
+	public static String TEMPLATE_PROPERTY = "template";
+	JLabel huellaLbl = new JLabel("");
+	
 
-	/**
-	 * Create the frame.
-	 * @throws InterruptedException 
-	 */
+	
+	public DPFPTemplate getTemplate() {
+		return template;
+	}
+
+
+
+
+	public void setTemplate(DPFPTemplate template) {
+		this.template = template;
+	}
+	
+	/*este es el metodo que se llama cuando se inicia el lector de huellas*/
+	public void iniciar(){
+		Lector.addDataListener(new DPFPDataAdapter() {	
+			
+			public void dataAcquired(final DPFPDataEvent e) {
+				SwingUtilities.invokeLater(new Runnable() {					
+					public void run() {
+												
+						procesarCaptura(e.getSample());
+						
+						
+					}
+				});											
+				
+			}
+		});
+		
+		Lector.addSensorListener(new DPFPSensorAdapter(){
+			
+			
+			
+			
+		});		
+		
+	}
+
+
+
+
 	@SuppressWarnings("null")
 	public Visit() throws InterruptedException {
+		
+		try {
+	         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+	         } catch (Exception e) {
+	         JOptionPane.showMessageDialog(null, "Imposible modificar el tema visual", "Lookandfeel inválido.",
+	         JOptionPane.ERROR_MESSAGE);
+	         }
+		iniciar();
+		start();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1125, 630);
 		contentPane = new JPanel();
@@ -162,7 +241,10 @@ public class Visit extends JFrame {
 		guardarBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				String foto = fotos.tomarfoto(camPersona);
+				GuardarHuella h = new GuardarHuella();
+				
+				
+				//String foto = fotos.tomarfoto(camPersona);
 				
 				Date date = new Date();
 				Object asun = asuntoCbx.getSelectedItem();
@@ -175,6 +257,7 @@ public class Visit extends JFrame {
 					ausent = "no";
 					
 				}
+				
 				String pers = personaTxt.getText();												
 				String nombre = pnombreTxt.getText()+" "+snombreTxt.getText();
 				String apellido = apellidoTxt.getText()+" "+sapellidoTxt.getText();
@@ -183,6 +266,9 @@ public class Visit extends JFrame {
 				String ced = cedulaTxt.getText();
 				
 				int cedula = Integer.parseInt(ced);
+			
+				
+				
 				
 				Date fecha = new Date();
 				
@@ -204,14 +290,14 @@ public class Visit extends JFrame {
 				*/
 				PersonaTO personaTO = new PersonaTO();
 				personaTO.setNombre(nombre);
-				personaTO.setFoto(foto);
+				//personaTO.setFoto(foto);
 				personaTO.setApellido(apellido);
 				personaTO.setCedula(cedula);
 				personaTO.setFechanacimiento(fecha);
 				personaTO.setSexo(sexo);
-				personaTO.setTipoSangre(tiposangre);
+				personaTO.setTipoSangre(tiposangre);				
 				ControladorPersona controlP = new ControladorPersona();
-				controlP.guardarPersona(personaTO);
+				controlP.guardarPersona(personaTO,camPersona,image);
 				controlP.mostrarPersona();
 				
 				/*se llenan los campos de la tabla registro para luego llamar el metodo
@@ -229,6 +315,8 @@ public class Visit extends JFrame {
 				controladorRegistro controlReg = new controladorRegistro();
 				controlReg.guardarRegistro(registroTO);
 				
+				Reclutador.clear();				
+				huellaLbl.setIcon(null);
 				
 				
 				
@@ -346,6 +434,9 @@ public class Visit extends JFrame {
 		contentPane.add(lblSexo);
 		
 		
+		huellaLbl.setBounds(484, 227, 230, 114);
+		contentPane.add(huellaLbl);
+		
 		
 		
 		
@@ -418,6 +509,9 @@ public class Visit extends JFrame {
 		
 		
 		
+		
+		
+		
 		asuntoCbx.addItem("Cita");
 		asuntoCbx.addItem("recibir mensajeria");
 		asuntoCbx.addItem("entregar mensajeria");
@@ -425,4 +519,69 @@ public class Visit extends JFrame {
 		
 		
 	}
+	
+	public DPFPFeatureSet inscripcion;
+	public DPFPFeatureSet verificacion;
+	public Image image;
+	
+	
+	public void procesarCaptura(DPFPSample sample){
+		inscripcion = extraercaracteristicas(sample, DPFPDataPurpose.DATA_PURPOSE_ENROLLMENT);
+		verificacion = extraercaracteristicas(sample, DPFPDataPurpose.DATA_PURPOSE_VERIFICATION);
+		if(inscripcion!=null)
+			try {
+				System.out.println("caracteristicas de huella creadas");
+				Reclutador.addFeatures(inscripcion);
+				
+				image = CrearImagenHuella(sample);				
+				dibujarHuella(image);
+							
+				
+			} catch (DPFPImageQualityException e) {
+				System.err.println("error "+e.getMessage());
+			}
+		
+		
+	}
+	
+	
+	public DPFPFeatureSet extraercaracteristicas(DPFPSample sample,DPFPDataPurpose purpose){
+		DPFPFeatureExtraction extractor = DPFPGlobal.getFeatureExtractionFactory().createFeatureExtraction();
+		try {
+			return extractor.createFeatureSet(sample, purpose);
+			
+		} catch (DPFPImageQualityException e) {
+			return null;
+		}
+	}
+	
+	
+	public  Image CrearImagenHuella(DPFPSample sample) {
+		return DPFPGlobal.getSampleConversionFactory().createImage(sample);
+	}
+	
+	public void dibujarHuella(Image image){
+		huellaLbl.setIcon(new ImageIcon(
+				image.getScaledInstance(huellaLbl.getWidth(), huellaLbl.getHeight(), image.SCALE_DEFAULT)
+				
+				
+				));
+		repaint();
+	}
+	
+	
+	
+	
+	
+	public void start(){
+		Lector.startCapture();		
+	}
+	
+	
+	public void stop(){
+		Lector.startCapture();
+		
+	}
+	
+	
 }
