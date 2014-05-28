@@ -6,6 +6,8 @@ public class EquipoTO {
 	private int idRegistro;
 	private String foto;
 	private String nombre;
+	
+	
 	public int getId() {
 		return id;
 	}

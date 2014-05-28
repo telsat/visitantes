@@ -198,12 +198,12 @@ public class Visit extends JFrame {
 		contentPane.add(asuntoCbx);
 		
 		JPanel fotoPanel = new JPanel();
-		fotoPanel.setBackground(Color.GRAY);
+		fotoPanel.setBackground(UIManager.getColor("Button.background"));
 		fotoPanel.setBounds(484, 54, 230, 148);
 		contentPane.add(fotoPanel);
 		
 		JPanel equipoPanel = new JPanel();
-		equipoPanel.setBackground(Color.GRAY);
+		equipoPanel.setBackground(UIManager.getColor("Button.background"));
 		equipoPanel.setBounds(829, 54, 230, 148);
 		contentPane.add(equipoPanel);
 		
@@ -213,8 +213,7 @@ public class Visit extends JFrame {
 		
 		final Webcam camEquipo;		
 		WebcamPanel panelE = null;			
-		camEquipo = (Webcam) lista.get(1);
-		//camEquipo.setViewSize(new Dimension(640,480));			
+		camEquipo = (Webcam) lista.get(1);					
 		panelE = new WebcamPanel(camEquipo);				
 		panelE.setFillArea(true);
 		panelE.setPreferredSize(new Dimension(200,150));		
@@ -244,7 +243,7 @@ public class Visit extends JFrame {
 				GuardarHuella h = new GuardarHuella();
 				
 				
-				//String foto = fotos.tomarfoto(camPersona);
+				
 				
 				Date date = new Date();
 				Object asun = asuntoCbx.getSelectedItem();
@@ -263,9 +262,10 @@ public class Visit extends JFrame {
 				String apellido = apellidoTxt.getText()+" "+sapellidoTxt.getText();
 				String sexo = sexoTxt.getText();
 				String tiposangre = sangreTxt.getText();
-				String ced = cedulaTxt.getText();
-				
+				String ced = cedulaTxt.getText();	
 				int cedula = Integer.parseInt(ced);
+				
+				String nombrer = pnombreTxt.getText()+" "+snombreTxt.getText();
 			
 				
 				
@@ -289,8 +289,7 @@ public class Visit extends JFrame {
 				  que los guarda
 				*/
 				PersonaTO personaTO = new PersonaTO();
-				personaTO.setNombre(nombre);
-				//personaTO.setFoto(foto);
+				personaTO.setNombre(nombre);				
 				personaTO.setApellido(apellido);
 				personaTO.setCedula(cedula);
 				personaTO.setFechanacimiento(fecha);
@@ -298,7 +297,7 @@ public class Visit extends JFrame {
 				personaTO.setTipoSangre(tiposangre);				
 				ControladorPersona controlP = new ControladorPersona();
 				controlP.guardarPersona(personaTO,camPersona,image);
-				controlP.mostrarPersona();
+				
 				
 				/*se llenan los campos de la tabla registro para luego llamar el metodo
 				  que los guarda
@@ -311,12 +310,15 @@ public class Visit extends JFrame {
 				registroTO.setFechaingreso(date);	
 				registroTO.setAsunto(asunto);
 				registroTO.setVisitadaausente(ausent);
+				registroTO.setNombre(nombrer);
 				
 				controladorRegistro controlReg = new controladorRegistro();
 				controlReg.guardarRegistro(registroTO);
 				
 				Reclutador.clear();				
 				huellaLbl.setIcon(null);
+				
+				
 				
 				
 				
@@ -330,6 +332,7 @@ public class Visit extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				String ced = cedulaTxt.getText();
 				int cedula = Integer.parseInt(ced);
+				
 				Date fecha = new Date();
 				
 				 
@@ -448,6 +451,7 @@ public class Visit extends JFrame {
 				String fotoEquipo = fotos.fotoequipo(camEquipo);
 				String ced = cedulaTxt.getText();
 				int cedula = Integer.parseInt(ced);
+				
 				registroTO.setCedulapersona(cedula);
 				EquipoTO equipo = new EquipoTO();				
 				String nombreEquipo = equipoTxt.getText();
@@ -494,7 +498,7 @@ public class Visit extends JFrame {
 		final String[] columnas = {"nombre","apellido","cargo","extension","area"};
 		JButton btnBuscar = new JButton("Buscar");
 		btnBuscar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0) {				
 				ControladorEmpleado ce = new ControladorEmpleado();
 				String[][] datos;
 				String persona = personaTxt.getText();
@@ -505,6 +509,46 @@ public class Visit extends JFrame {
 		});
 		btnBuscar.setBounds(282, 288, 126, 23);
 		contentPane.add(btnBuscar);
+		
+		JButton btnLimpiarCampos = new JButton("Limpiar campos");
+		btnLimpiarCampos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				personaTxt.setText(null);												
+				pnombreTxt.setText(null);
+				snombreTxt.setText(null);
+				apellidoTxt.setText(null);
+				sapellidoTxt.setText(null);
+				sexoTxt.setText(null);
+				sangreTxt.setText(null);
+				cedulaTxt.setText(null);
+				nacimientoTxt.setText(null);
+				fabricacion1Txt.setText(null);
+				fabricacion2txt.setText(null);
+				
+				
+			}
+		});
+		btnLimpiarCampos.setBounds(353, 558, 158, 23);
+		contentPane.add(btnLimpiarCampos);
+		
+		JButton btnReportes = new JButton("Reportes");
+		btnReportes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {				
+				Reportes r = new Reportes();
+				r.setVisible(true);
+			}
+		});
+		btnReportes.setBounds(539, 558, 132, 23);
+		contentPane.add(btnReportes);
+		
+		JLabel lblPersona = new JLabel("Cam persona");
+		lblPersona.setBounds(484, 30, 88, 14);
+		contentPane.add(lblPersona);
+		
+		JLabel lblCamEquipo = new JLabel("Cam Equipo");
+		lblCamEquipo.setBounds(829, 30, 94, 14);
+		contentPane.add(lblCamEquipo);
 		
 		
 		
@@ -531,8 +575,7 @@ public class Visit extends JFrame {
 		if(inscripcion!=null)
 			try {
 				System.out.println("caracteristicas de huella creadas");
-				Reclutador.addFeatures(inscripcion);
-				
+				Reclutador.addFeatures(inscripcion);				
 				image = CrearImagenHuella(sample);				
 				dibujarHuella(image);
 							
@@ -576,12 +619,4 @@ public class Visit extends JFrame {
 	public void start(){
 		Lector.startCapture();		
 	}
-	
-	
-	public void stop(){
-		Lector.startCapture();
-		
-	}
-	
-	
 }

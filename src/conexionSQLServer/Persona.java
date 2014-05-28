@@ -62,7 +62,7 @@ public class Persona {
 	
 	
 	public int getCedula() {
-		return cedula;
+		return  cedula;
 	}
 	public void setCedula(int cedula) {
 		this.cedula = cedula;

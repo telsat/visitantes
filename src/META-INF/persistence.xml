@@ -5,6 +5,7 @@
 		<class>entity.Registro</class>
 		<class>entity.Equipo</class>
 		<class>entity.Empleado</class>
+		<class>entity.Fechas</class>
 
 
 <properties>

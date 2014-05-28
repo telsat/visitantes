@@ -27,6 +27,8 @@ public class ControladorPersona {
 		public void guardarPersona(PersonaTO personaTO, Webcam webcam,Image huellaImg){
 			
 			int cedula = personaTO.getCedula();
+			
+			
 			String nombre = personaTO.getNombre();
 			String apellido = personaTO.getApellido();
 			String sexo = personaTO.getSexo();
@@ -82,36 +84,22 @@ public class ControladorPersona {
 			
 		}
 		
-		public void mostrarPersona(){
-			try {			
-				Query query = em.createNativeQuery("SELECT *" + " FROM [ensayo].[dbo].[persona] WHERE cedula = 18430 ",Persona.class);
-				
-				@SuppressWarnings("unchecked")
-				List<Persona> persona =  (List<Persona>)query.getResultList();
-				
-				
-				
-				
-				for(Iterator<Persona> it = persona.iterator();it.hasNext();){
-					Persona ingre = (Persona)it.next();
-					
-					System.out.println("nombre: " + ingre.getNombre());
-					System.out.println("apellido: " + ingre.getApellido());
-					System.out.println("sexo: " + ingre.getSexo());
-					System.out.println("fecha " + ingre.getFechanacimiento());		
-					
-					
-				}
-				
-				
-				
+		@SuppressWarnings("unchecked")
+		public Object[][] mostrarPersona(String nombre){
 			
-				
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-				
+			Query query = em.createNativeQuery("SELECT * FROM [ensayo].[dbo].[persona] WHERE (nombre like '%"+nombre+"%' or apellido like'%"+nombre+"%')",Persona.class);
+			List<Persona> persona =  query.getResultList();		
+			Object [][] datos = new String[persona.size()][8];			
+			int size = persona.size();
+			for(int x = 0;x<size;x++){
+					datos[x][0] = persona.get(x).getNombre();
+					datos[x][1] = persona.get(x).getApellido();
+					datos[x][2] = persona.get(x).getCedula();
+					
+							
 			}
-			
+				
+				return datos;		
 			
 		}
 }
