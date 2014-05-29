@@ -178,10 +178,83 @@ public class Reportes extends JFrame {
 		
 		final controladorRegistro cr = new controladorRegistro();
 		
-		JButton btnConsultarPorPersona = new JButton("Consultar por persona o fecha");
+		JButton btnConsultarPorPersona = new JButton("Consultar por fecha");
 		btnConsultarPorPersona.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0) {				
 				
+				/*se toma la fecha inicia se convierte a string luego se agrega 
+				  la hora al string y se convierte a Date */
+				Date selectedDate = (Date) datePicker.getModel().getValue();
+				Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+				String s = formatter.format(selectedDate);
+				Object h = horaCbx.getSelectedItem();
+				String hora = h.toString();
+				Object m = minutoCbx.getSelectedItem();
+				String minuto = m.toString();
+				Object seg = segundoCbx.getSelectedItem();
+				String segundo = seg.toString();
+				
+				s = s+" "+hora+":"+minuto+":"+segundo;
+				Date fecha = null;
+							
+				SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				try {
+					 fecha = form.parse(s);
+				} catch (ParseException e) {
+					System.out.println(e.getMessage());
+				}
+				
+				
+				/*se toma la fecha final se convierte a string luego se agrega 
+				  la hora al string y se convierte a Date	*/					
+				
+				Date fechaSelect = (Date) finalDate.getModel().getValue();
+				String ff = formatter.format(fechaSelect);
+				Object hf = horafCbx.getSelectedItem();
+				String horaf = hf.toString();
+				Object mf = minutofCbx.getSelectedItem();
+				String minutof = mf.toString();
+				Object sf = segundofCbx.getSelectedItem();
+				String segundof = sf.toString();
+				
+				ff = ff +" "+horaf+":"+minutof+":"+segundof;
+				
+				Date fechaf = null;
+				
+				try {
+					fechaf = form.parse(ff);
+					
+				} catch (ParseException e) {
+					System.out.println(e.getMessage());
+					
+				}
+				
+				
+				Object [][] datos;
+				
+				datos = cr.ConsultarRegistro(fecha, fechaf);
+				table.setModel(new DefaultTableModel(datos,columnas));
+				
+				
+			}
+		});
+		btnConsultarPorPersona.setBounds(10, 428, 197, 23);
+		contentPane.add(btnConsultarPorPersona);
+		
+		btnCapturarPantalla = new JButton("Capturar Pantalla");
+		btnCapturarPantalla.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {				
+				Pantalla p = new Pantalla();
+				p.capturar();				
+				
+			}
+		});
+		btnCapturarPantalla.setBounds(448, 428, 145, 23);
+		contentPane.add(btnCapturarPantalla);
+		
+		JButton btnNewButton = new JButton("Consultar por fecha y nombre");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
 				String nombre = nombreTxt.getText();
 				
 				/*se toma la fecha inicia se convierte a string luego se agrega 
@@ -235,25 +308,14 @@ public class Reportes extends JFrame {
 				
 				Object [][] datos;
 				
-				datos = cr.ConsultarRegistro(fecha, fechaf, nombre);
+				datos = cr.consultarVisitas(fecha, fechaf, nombre);
 				table.setModel(new DefaultTableModel(datos,columnas));
 				
 				
 			}
 		});
-		btnConsultarPorPersona.setBounds(10, 428, 197, 23);
-		contentPane.add(btnConsultarPorPersona);
-		
-		btnCapturarPantalla = new JButton("Capturar Pantalla");
-		btnCapturarPantalla.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {				
-				Pantalla p = new Pantalla();
-				p.capturar();				
-				
-			}
-		});
-		btnCapturarPantalla.setBounds(242, 428, 145, 23);
-		contentPane.add(btnCapturarPantalla);
+		btnNewButton.setBounds(222, 428, 201, 23);
+		contentPane.add(btnNewButton);
 		
 		
 		for(int i=1;i<=24;i++){

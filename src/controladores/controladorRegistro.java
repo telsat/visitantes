@@ -77,9 +77,9 @@ public class controladorRegistro {
 	
 	
 	@SuppressWarnings("unchecked")
-	public Object[][] ConsultarRegistro(Date idate, Date fdate,String nombre){	
+	public Object[][] ConsultarRegistro(Date idate, Date fdate){	
 		
-		String q = "SELECT TOP 100 * FROM [ensayo].[dbo].[registro] WHERE (fechaingreso BETWEEN  ? AND ?) or nombre like '%"+nombre+"%'";
+		String q = "SELECT TOP 100 * FROM [ensayo].[dbo].[registro] WHERE (fechaingreso BETWEEN  ? AND ?)";
 		
 		Query query = em.createNativeQuery(q,Registro.class);
 		query.setParameter(1, idate);
@@ -101,5 +101,32 @@ public class controladorRegistro {
 		
 		return datos;
 	}
+	
+	
+	public Object[][] consultarVisitas(Date idate, Date fdate,String nombre){	
+		
+		String q = "SELECT TOP 100 * FROM [ensayo].[dbo].[registro] WHERE (fechaingreso BETWEEN  ? AND ?) and nombre like '%"+nombre+"%'";
+		
+		Query query = em.createNativeQuery(q,Registro.class);
+		query.setParameter(1, idate);
+		query.setParameter(2, fdate);
+		List<Registro> listaR = query.getResultList();
+		Object[][] datos = new Object[listaR.size()][8];
+		
+		int size = listaR.size();
+		for(int x = 0;x<size;x++){
+			
+			datos[x][0] = listaR.get(x).getNombre();
+			datos[x][1] = listaR.get(x).getCedulapersona();
+			datos[x][2] = listaR.get(x).getPersonavisitada();
+			datos[x][3] = listaR.get(x).getFechaingreso();
+			datos[x][4] = listaR.get(x).getFechasalida();				
+					
+		}	
+		
+		
+		return datos;
 
+}
+	
 }
