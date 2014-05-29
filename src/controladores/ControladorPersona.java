@@ -102,6 +102,21 @@ public class ControladorPersona {
 				return datos;		
 			
 		}
+		
+		
+		public void consulatrpersona(int cedula){
+			Persona p = new Persona();
+			p = em.find(Persona.class, cedula);
+			if (p != null){
+				String foto = p.getFoto();
+				DisplayImg img = new DisplayImg();
+				try {
+					img.Display(foto);
+				} catch (IOException e) {					
+					e.printStackTrace();
+				}
+			}
+		}
 }
 
 		

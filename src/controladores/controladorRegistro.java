@@ -1,18 +1,13 @@
 package controladores;
 
 
-import java.sql.Timestamp;
+
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import javax.persistence.TemporalType;
-
 import to.RegistroTO;
 import conexionSQLServer.EntityManagerUtil;
-import conexionSQLServer.Persona;
-import entity.Empleado;
 import entity.Registro;
 
 
@@ -99,12 +94,9 @@ public class controladorRegistro {
 			datos[x][1] = listaR.get(x).getCedulapersona();
 			datos[x][2] = listaR.get(x).getPersonavisitada();
 			datos[x][3] = listaR.get(x).getFechaingreso();
-			datos[x][4] = listaR.get(x).getFechasalida();
-			//datos[x][5] = listaR.get(x).getCedulapersona();		
+			datos[x][4] = listaR.get(x).getFechasalida();				
 					
-		}
-		
-		
+		}	
 		
 		
 		return datos;

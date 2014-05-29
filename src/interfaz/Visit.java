@@ -38,7 +38,6 @@ import java.util.List;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 
-import java.awt.Color;
 
 import javax.swing.JTable;
 
@@ -51,7 +50,7 @@ import com.digitalpersona.onetouch.capture.DPFPCapture;
 import com.digitalpersona.onetouch.capture.event.DPFPDataAdapter;
 import com.digitalpersona.onetouch.capture.event.DPFPDataEvent;
 import com.digitalpersona.onetouch.capture.event.DPFPSensorAdapter;
-import com.digitalpersona.onetouch.capture.event.DPFPSensorEvent;
+
 import com.digitalpersona.onetouch.processing.DPFPEnrollment;
 import com.digitalpersona.onetouch.processing.DPFPFeatureExtraction;
 import com.digitalpersona.onetouch.processing.DPFPImageQualityException;
@@ -63,9 +62,7 @@ import com.github.sarxos.webcam.WebcamPanel;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 
-import javax.swing.JTextArea;
 
 
 
@@ -153,8 +150,9 @@ public class Visit extends JFrame {
 
 
 
-	@SuppressWarnings("null")
 	public Visit() throws InterruptedException {
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		try {
 	         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -265,7 +263,7 @@ public class Visit extends JFrame {
 				String ced = cedulaTxt.getText();	
 				int cedula = Integer.parseInt(ced);
 				
-				String nombrer = pnombreTxt.getText()+" "+snombreTxt.getText();
+				String nombrer = pnombreTxt.getText()+" "+snombreTxt.getText()+" "+apellidoTxt.getText()+" "+sapellidoTxt.getText();
 			
 				
 				

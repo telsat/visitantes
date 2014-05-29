@@ -26,9 +26,12 @@ import java.util.Date;
 
 import javax.swing.JTable;
 
-import controladores.ControladorFechas;
 import controladores.ControladorPersona;
+import controladores.Pantalla;
 import controladores.controladorRegistro;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 @SuppressWarnings("serial")
@@ -40,12 +43,15 @@ public class Reportes extends JFrame {
 	/**
 	 * Launch the application.
 	 */
+	
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					Reportes frame = new Reportes();
 					frame.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -57,8 +63,9 @@ public class Reportes extends JFrame {
 	 * Create the frame.
 	 */
 	public Reportes() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1404, 512);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		setBounds(100, 100, 1362, 512);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -152,14 +159,26 @@ public class Reportes extends JFrame {
 		contentPane.add(segundofLbl);
 		
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				int fila = table.getSelectedRow();
+				String ced = (String) table.getValueAt(fila, 1);				
+				int cedula = Integer.parseInt(ced);
+				ControladorPersona cp = new ControladorPersona();
+				cp.consulatrpersona(cedula);
+				
+				
+			}
+		});
 		table.setBounds(10, 190, 1316, 206);
 		contentPane.add(table);
 		
-		final String[] columnas = {"nombre","apellido","cargo","extension","area"};
+		final String[] columnas = {"nombre","cedula","persona visitada","fecha ingreso","fecha salida"};
 		
 		final controladorRegistro cr = new controladorRegistro();
 		
-		JButton btnConsultarPorPersona = new JButton("Consultar por persona y fecha");
+		JButton btnConsultarPorPersona = new JButton("Consultar por persona o fecha");
 		btnConsultarPorPersona.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -225,6 +244,17 @@ public class Reportes extends JFrame {
 		btnConsultarPorPersona.setBounds(10, 428, 197, 23);
 		contentPane.add(btnConsultarPorPersona);
 		
+		btnCapturarPantalla = new JButton("Capturar Pantalla");
+		btnCapturarPantalla.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {				
+				Pantalla p = new Pantalla();
+				p.capturar();				
+				
+			}
+		});
+		btnCapturarPantalla.setBounds(242, 428, 145, 23);
+		contentPane.add(btnCapturarPantalla);
+		
 		
 		for(int i=1;i<=24;i++){
 			horaCbx.addItem(i);
@@ -266,6 +296,7 @@ public class Reportes extends JFrame {
 	private JComboBox<Integer> minutofCbx;
 	private JComboBox<Integer> segundofCbx;
 	private JTable table;
+	private JButton btnCapturarPantalla;
 }	
 	
 
