@@ -481,6 +481,7 @@ public class Visit extends JFrame {
 		contentPane.add(serialEquipoTxt);
 		serialEquipoTxt.setColumns(10);
 		table = new JTable();
+		
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -541,11 +542,11 @@ public class Visit extends JFrame {
 		contentPane.add(btnReportes);
 		
 		JLabel lblPersona = new JLabel("Cam persona");
-		lblPersona.setBounds(484, 30, 88, 14);
+		lblPersona.setBounds(501, 29, 88, 14);
 		contentPane.add(lblPersona);
 		
 		JLabel lblCamEquipo = new JLabel("Cam Equipo");
-		lblCamEquipo.setBounds(829, 30, 94, 14);
+		lblCamEquipo.setBounds(846, 29, 94, 14);
 		contentPane.add(lblCamEquipo);
 		
 		
@@ -564,7 +565,7 @@ public class Visit extends JFrame {
 	
 	public DPFPFeatureSet inscripcion;
 	public DPFPFeatureSet verificacion;
-	public Image image;
+	public Image image = null;
 	
 	
 	public void procesarCaptura(DPFPSample sample){

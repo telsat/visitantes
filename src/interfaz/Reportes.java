@@ -159,12 +159,13 @@ public class Reportes extends JFrame {
 		contentPane.add(segundofLbl);
 		
 		table = new JTable();
+		
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				int fila = table.getSelectedRow();
-				String ced = (String) table.getValueAt(fila, 1);				
-				int cedula = Integer.parseInt(ced);
+				Integer cedula = (Integer) table.getValueAt(fila, 1);				
+				
 				ControladorPersona cp = new ControladorPersona();
 				cp.consulatrpersona(cedula);
 				
