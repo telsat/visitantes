@@ -8,7 +8,13 @@ import javax.imageio.ImageIO;
 
 import com.github.sarxos.webcam.Webcam;
 
+
+/*esta clase se encarga de las web cam y tomar fotos*/
 public class Fotos {
+	
+	/*este metodo captura la foto de la persona y la guarda
+	 como imagen con extension PNG con un nombre unico que nunca se va a repetir
+	 y devuelve la ruta de la imagen para luego ser guardada en la tabla persona*/
 	public String tomarfoto(Webcam select){
 		
 	    Webcam webcam = select;	
@@ -34,6 +40,11 @@ public class Fotos {
 
 	}
 	
+	
+
+/*este metodo captura la foto de un equipo y la guarda
+ como imagen con extension PNG con un nombre unico que nunca se va a repetir
+ y devuelve la ruta de la imagen para luego ser guardada en la tabla equipo*/	
 public String fotoequipo(Webcam select){
 		
 	    Webcam webcam = select;	

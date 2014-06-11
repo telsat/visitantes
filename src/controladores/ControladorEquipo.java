@@ -7,9 +7,17 @@ import to.RegistroTO;
 import conexionSQLServer.EntityManagerUtil;
 import entity.Equipo;
 
+
+/*esta clase contiene los metodos con los cuales se hacen queries como inserciones
+ o consultas en la tabla equipo de la base de datos*/
 public class ControladorEquipo {
 	private EntityManager em = EntityManagerUtil.getEntityManager();
 	Equipo equipo = new Equipo();
+	
+	
+	/*este metodo recibe dos objetos transfer object con los datos 
+	  del equipo a registrar y a quien pertenece el equipo y
+	  el identificador del registro al cual pertenece el equipo*/
 	public void RegistraEquipo(EquipoTO equipoTO,RegistroTO registroTO){
 		
 		String nombre = equipoTO.getNombre();

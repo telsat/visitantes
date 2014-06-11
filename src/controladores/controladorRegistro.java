@@ -10,11 +10,15 @@ import to.RegistroTO;
 import conexionSQLServer.EntityManagerUtil;
 import entity.Registro;
 
-
+/*esta clase contiene los metodos que se encargarn de insertar y consultar
+  los registros o ingresos de cada persona.*/
 public class controladorRegistro {
 	
 	private EntityManager em = EntityManagerUtil.getEntityManager();
 	Registro registro = new Registro();
+	
+	/*este metodo se encarga de guardar un nuevo ingreso cuando una persona 
+	 * llega de visita*/
 	
 	public void guardarRegistro(RegistroTO registroTO){
 		int cedula = registroTO.getCedulapersona();
@@ -49,7 +53,8 @@ public class controladorRegistro {
 		
 	}
 	
-	
+	/*este metodo busca la ultima ingreso de una persona
+	  cuando encuentra la ultima entrada registra la fecha de salida*/
 	public void registrarSalida(RegistroTO registroTO){
 		
 		try {
@@ -76,10 +81,13 @@ public class controladorRegistro {
 	}
 	
 	
+	/*este metodo se encarga de buscar los ingresos entre dos fechas 
+	  y lista todas las personas que han ingresado en dichas fechas*/
+	
 	@SuppressWarnings("unchecked")
 	public Object[][] ConsultarRegistro(Date idate, Date fdate){	
 		
-		String q = "SELECT TOP 100 * FROM [ensayo].[dbo].[registro] WHERE (fechaingreso BETWEEN  ? AND ?)";
+		String q = "SELECT * FROM [ensayo].[dbo].[registro] WHERE (fechaingreso BETWEEN  ? AND ?)";
 		
 		Query query = em.createNativeQuery(q,Registro.class);
 		query.setParameter(1, idate);
@@ -103,6 +111,8 @@ public class controladorRegistro {
 	}
 	
 	
+	/*este metodo se encarga de consultar los ingresos por fechas y por nombre
+	  el metodo retorna los ingresos de las personas con el nombre dado y en las fechas*/
 	public Object[][] consultarVisitas(Date idate, Date fdate,String nombre){	
 		
 		String q = "SELECT TOP 100 * FROM [ensayo].[dbo].[registro] WHERE (fechaingreso BETWEEN  ? AND ?) and nombre like '%"+nombre+"%'";

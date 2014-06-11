@@ -62,6 +62,10 @@ public class Reportes extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	
+	/*este es el constructor de la interfaz de los reportes
+	  en el constructor se cargan todos los componentes graficos de la interfaz
+	  y contiene los eventos de los botones o tablas*/
 	public Reportes() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
@@ -160,6 +164,11 @@ public class Reportes extends JFrame {
 		
 		table = new JTable();
 		
+		
+		/*esta tabla despliega despliega los ingresos
+		  de una persona 
+		  tiene un evento que utiliza el click del mouse para capturar 
+		  la cedula de la persona seleccionada y desplegar la foto de esa persona*/
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -179,6 +188,10 @@ public class Reportes extends JFrame {
 		
 		final controladorRegistro cr = new controladorRegistro();
 		
+		
+		/*este boton tiene el evento de coger las fechas y realizar la busqueda
+		  de los ingresos en esas fechas especificadas llamando un metodo
+		   que se encarga de la cosulta*/
 		JButton btnConsultarPorPersona = new JButton("Consultar por fecha");
 		btnConsultarPorPersona.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {				
@@ -233,6 +246,7 @@ public class Reportes extends JFrame {
 				
 				Object [][] datos;
 				
+				//llena una tabla con los datos retornados por la consulta hecha
 				datos = cr.ConsultarRegistro(fecha, fechaf);
 				table.setModel(new DefaultTableModel(datos,columnas));
 				
@@ -242,6 +256,9 @@ public class Reportes extends JFrame {
 		btnConsultarPorPersona.setBounds(10, 428, 197, 23);
 		contentPane.add(btnConsultarPorPersona);
 		
+		
+		/*este boton tiene el evento para llamar el metodo que captura la pantalla
+		 * y la guarda como imagen*/
 		btnCapturarPantalla = new JButton("Capturar Pantalla");
 		btnCapturarPantalla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {				
@@ -252,6 +269,11 @@ public class Reportes extends JFrame {
 		});
 		btnCapturarPantalla.setBounds(448, 428, 145, 23);
 		contentPane.add(btnCapturarPantalla);
+		
+		
+		/*este boton tiene un evento que llama un metodo que busca los ingresos
+		 por fecha y nombre de una persona, para luego llenar una tabla con 
+		 las personas que tengan ese nombre y tengan ingresos registrados en esas fechas*/
 		
 		JButton btnNewButton = new JButton("Consultar por fecha y nombre");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -308,7 +330,7 @@ public class Reportes extends JFrame {
 				
 				
 				Object [][] datos;
-				
+				//llena la tabla con los datos retornados por la consulta
 				datos = cr.consultarVisitas(fecha, fechaf, nombre);
 				table.setModel(new DefaultTableModel(datos,columnas));
 				
@@ -318,7 +340,10 @@ public class Reportes extends JFrame {
 		btnNewButton.setBounds(222, 428, 201, 23);
 		contentPane.add(btnNewButton);
 		
-		
+		/*los siguientes ciclos se utilizan para llenar
+		  los comboBox que contienen horas, minutos y segundos y evitar 
+		  que el usuario escriba y cometa errores en las fechas y poder
+		  controlar el formato en el que se capturan las fechas y horas*/
 		for(int i=1;i<=24;i++){
 			horaCbx.addItem(i);
 			horafCbx.addItem(i);

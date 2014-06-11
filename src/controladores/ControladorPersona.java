@@ -5,7 +5,6 @@ import huella.GuardarHuella;
 import java.awt.Image;
 import java.io.IOException;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -18,12 +17,19 @@ import conexionSQLServer.Persona;
 import to.PersonaTO;
 import webcam.Fotos;
 
+
+/*esta clase contiene los metodos para los queries,consultas
+  y adicion de nuevos usuarios a la base de datos en la tabla persona*/
 public class ControladorPersona {
 	private EntityManager em = EntityManagerUtil.getEntityManager();
 
 	Persona persona = new Persona();
 	Fotos fotos = new Fotos();
 	GuardarHuella h = new GuardarHuella();
+	
+	/*este metodo se encarga de registrar una nueva persona que llega de visita.
+	  si la persona ya existe en la base de datos enotnces muestra la foto de
+	  esa persona.*/
 		public void guardarPersona(PersonaTO personaTO, Webcam webcam,Image huellaImg){
 			
 			int cedula = personaTO.getCedula();
@@ -84,6 +90,9 @@ public class ControladorPersona {
 			
 		}
 		
+		
+		/*este metodo lista las personas con por nombre o apellido*/
+		
 		@SuppressWarnings("unchecked")
 		public Object[][] mostrarPersona(String nombre){
 			
@@ -104,6 +113,9 @@ public class ControladorPersona {
 		}
 		
 		
+		
+		/*este metodo recibe la cedula de una persona y la busca en la tabla persona
+		  para mostrar la foto de esa persona*/
 		public void consulatrpersona(int cedula){
 			Persona p = new Persona();
 			p = em.find(Persona.class, cedula);

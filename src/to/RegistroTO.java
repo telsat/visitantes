@@ -2,6 +2,10 @@ package to;
 
 import java.util.Date;
 
+
+/*esta clase es un transfer object que se utiliza para 
+enviar datos desde la interfaz hacia las entidades 
+y hacer la persistencia de los datos con la tabla registro*/
 public class RegistroTO {
 
 	private int Id;

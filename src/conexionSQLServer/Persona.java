@@ -12,6 +12,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 
+
+/*esta clase es un mapeo entre una clase java que contiene
+  los mismos campos o atrbutos que la tabla persona en la base de datos lo cual permite
+  hacer la persistencia con JPA*/
 @Entity
 @Table(name = "persona")
 public class Persona {

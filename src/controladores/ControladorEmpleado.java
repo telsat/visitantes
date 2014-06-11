@@ -9,9 +9,16 @@ import conexionSQLServer.EntityManagerUtil;
 import entity.Empleado;
 
 
+/*esta clase contiene los metodos para hacer queries en la tabla empleado*/
 
 public class ControladorEmpleado {
 	private EntityManager em = EntityManagerUtil.getEntityManager();
+	
+	
+	/*este metodo lista los empleados buscando por nombre o apellido, recibe un string 
+	  con el nmbre O el apellido del empleado y lo busca, como pueden ser varios empleados
+	  con el mismo nombre o apellido enotnces llena una matriz de string con los datos requeridos
+	  y la retorna al metodo que la llama*/
 	
 	@SuppressWarnings("unchecked")
 	public String[][] empleados(String nombre){

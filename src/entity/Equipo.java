@@ -8,6 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 
+
+
+/*esta clase es un mapeo entre una clase java que contiene
+los mismos campos o atrbutos que la tabla equipo en la base de datos lo cual permite
+hacer la persistencia con JPA*/
 @Entity
 @Table(name="equipo")
 public class Equipo {

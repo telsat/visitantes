@@ -65,7 +65,7 @@ import java.awt.event.MouseEvent;
 
 
 
-
+/*esta clase contiene la interfaz grafica principal del sistema de visitantes*/
 
 @SuppressWarnings("serial")
 public class Visit extends JFrame {
@@ -100,7 +100,7 @@ public class Visit extends JFrame {
 		});
 	}
 	
-	
+	/*las siguiente variables se utilizan para la captura de huella digital*/
 	private DPFPCapture Lector = DPFPGlobal.getCaptureFactory().createCapture();
 	private DPFPEnrollment Reclutador = DPFPGlobal.getEnrollmentFactory().createEnrollment();
 	DPFPVerification Verificador = DPFPGlobal.getVerificationFactory().createVerification();
@@ -149,7 +149,8 @@ public class Visit extends JFrame {
 
 
 
-
+	/*este es el constructor de la interfaz
+	  en donde se cargan todos los componentes graficos*/
 	public Visit() throws InterruptedException {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -160,6 +161,8 @@ public class Visit extends JFrame {
 	         JOptionPane.showMessageDialog(null, "Imposible modificar el tema visual", "Lookandfeel inválido.",
 	         JOptionPane.ERROR_MESSAGE);
 	         }
+		
+		/*los dos siguientes metodos inician el lector de huellas*/
 		iniciar();
 		start();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -206,9 +209,12 @@ public class Visit extends JFrame {
 		contentPane.add(equipoPanel);
 		
 		
-		
+		/*se hace una lista de las web cam conectadas al equipo
+		 * y se les da un nombre para identificarlas y trabajar con ellas*/
 		List<Webcam> lista = Webcam.getWebcams();
 		
+		/*las siguientes lineas se utilizan para configuracion y despliegue grafico
+		 * de la camara que toma las fotos de los equipos*/
 		final Webcam camEquipo;		
 		WebcamPanel panelE = null;			
 		camEquipo = (Webcam) lista.get(1);					
@@ -217,7 +223,8 @@ public class Visit extends JFrame {
 		panelE.setPreferredSize(new Dimension(200,150));		
 		equipoPanel.add(panelE);
 		
-		
+		/*las siguientes lineas se utilizan para configuracion y despliegue grafico
+		 * de la camara que toma las fotos de las personas*/
 		final Webcam camPersona;
 		WebcamPanel panelP = null;
 		camPersona = (Webcam) lista.get(0);	
@@ -233,7 +240,10 @@ public class Visit extends JFrame {
 		
 		final Fotos fotos = new Fotos();
 		
-		
+		/*este boton tiene el evento que captura los datos en los textfield 
+		 * y los utiliza para guardar el registro o ingreso  de esa persona
+		 * llenando los transfer object necesarios para mandarlos al metodo
+		 * que hace el registro*/
 		JButton guardarBtn = new JButton("Registrar Ingreso");
 		guardarBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -255,6 +265,7 @@ public class Visit extends JFrame {
 					
 				}
 				
+				/*se capturan los datos de los textfiels*/
 				String pers = personaTxt.getText();												
 				String nombre = pnombreTxt.getText()+" "+snombreTxt.getText();
 				String apellido = apellidoTxt.getText()+" "+sapellidoTxt.getText();
@@ -283,7 +294,8 @@ public class Visit extends JFrame {
 					e.printStackTrace();
 				}
 				
-				/*se llenan los campos de la tabla persona para luego llamar el metodo
+				/*se llenan los campos del transfer object persona 
+				 para luego llamar el metodo
 				  que los guarda
 				*/
 				PersonaTO personaTO = new PersonaTO();
@@ -297,7 +309,8 @@ public class Visit extends JFrame {
 				controlP.guardarPersona(personaTO,camPersona,image);
 				
 				
-				/*se llenan los campos de la tabla registro para luego llamar el metodo
+				/*se llenan los campos del transfer object registro 
+				 para luego llamar el metodo
 				  que los guarda
 				*/
 				
@@ -313,7 +326,15 @@ public class Visit extends JFrame {
 				controladorRegistro controlReg = new controladorRegistro();
 				controlReg.guardarRegistro(registroTO);
 				
-				Reclutador.clear();				
+				
+				/*esta linea de codigo se encarga de limpiar
+				 el reclutador del lector de huella pues este captura 4 huellas
+				 para comprarlas, pero aqui solo nos interesa capturar una y guardarla 
+				 como imagen*/
+				Reclutador.clear();	
+				
+				
+				
 				huellaLbl.setIcon(null);
 				
 				
@@ -325,6 +346,8 @@ public class Visit extends JFrame {
 		guardarBtn.setBounds(10, 558, 140, 23);
 		contentPane.add(guardarBtn);
 		
+		
+		/*este boton tiene el evento que registra la salida de una persona*/
 		JButton salidaBtn = new JButton("Registrar Salida");
 		salidaBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -440,7 +463,8 @@ public class Visit extends JFrame {
 		
 		
 		
-		
+		/*este boton tiene el evento que permite registrar los equipos 
+		 * que llevan las personas en cada uno de sus ingresos*/
 		JButton EquipoBtn = new JButton("Registrar Equipo");
 		EquipoBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -494,6 +518,10 @@ public class Visit extends JFrame {
 		});
 		table.setBounds(10, 364, 432, 125);
 		contentPane.add(table);
+		
+		
+		/*este es un evento busca los empleados 
+		 y retorna los empleados con ese nombre para llenar una tabla*/
 		final String[] columnas = {"nombre","apellido","cargo","extension","area"};
 		JButton btnBuscar = new JButton("Buscar");
 		btnBuscar.addActionListener(new ActionListener() {
@@ -509,6 +537,8 @@ public class Visit extends JFrame {
 		btnBuscar.setBounds(282, 288, 126, 23);
 		contentPane.add(btnBuscar);
 		
+		
+		/*este metodo limpia todos los campos*/
 		JButton btnLimpiarCampos = new JButton("Limpiar campos");
 		btnLimpiarCampos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -531,6 +561,8 @@ public class Visit extends JFrame {
 		btnLimpiarCampos.setBounds(353, 558, 158, 23);
 		contentPane.add(btnLimpiarCampos);
 		
+		
+		/*este boton despliega un nuevo JFrame para hacer consultas y reportes*/
 		JButton btnReportes = new JButton("Reportes");
 		btnReportes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {				
@@ -568,6 +600,7 @@ public class Visit extends JFrame {
 	public Image image = null;
 	
 	
+	/*este metodo se encarga de procesar la captura de la huella*/
 	public void procesarCaptura(DPFPSample sample){
 		inscripcion = extraercaracteristicas(sample, DPFPDataPurpose.DATA_PURPOSE_ENROLLMENT);
 		verificacion = extraercaracteristicas(sample, DPFPDataPurpose.DATA_PURPOSE_VERIFICATION);
@@ -597,11 +630,13 @@ public class Visit extends JFrame {
 		}
 	}
 	
-	
+	/*este metodo crea la imagen de la huella*/
 	public  Image CrearImagenHuella(DPFPSample sample) {
 		return DPFPGlobal.getSampleConversionFactory().createImage(sample);
 	}
 	
+	
+	/*este metodo dibuja la huella de la persona en un Jpanel*/
 	public void dibujarHuella(Image image){
 		huellaLbl.setIcon(new ImageIcon(
 				image.getScaledInstance(huellaLbl.getWidth(), huellaLbl.getHeight(), image.SCALE_DEFAULT)
@@ -614,7 +649,7 @@ public class Visit extends JFrame {
 	
 	
 	
-	
+	/*este metodo inicia el lector de huellas*/
 	public void start(){
 		Lector.startCapture();		
 	}

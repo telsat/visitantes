@@ -1,5 +1,9 @@
 package to;
 
+
+/*esta clase es un transfer object que se utiliza para 
+  enviar datos desde la interfaz hacia las entidades 
+  y hacer la persistencia de los datos con la tabla empleado*/
 public class EmpleadoTO {
 	private int cedula;
 	private String nombre;

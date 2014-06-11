@@ -9,6 +9,8 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
+
+//la clase contiene el metodo que captura la pantalla y la guarda como una foto
 public class Pantalla {
 	
 public void capturar(){
